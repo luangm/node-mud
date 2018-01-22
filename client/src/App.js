@@ -1,8 +1,14 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import logo from './logo.svg';
+import io from 'socket.io-client';
 import './App.css';
 
 class App extends Component {
+
+  componentDidMount() {
+    var socket = io();
+  }
+
   render() {
     return (
       <div className="App">
