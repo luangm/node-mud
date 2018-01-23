@@ -20,6 +20,7 @@ class UserRepository {
 
   socket(socketId, user) {
     this._sockets[socketId] = user;
+    user.socket = socketId;
   }
 
   getBySocket(socketId) {

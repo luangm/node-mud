@@ -9,6 +9,8 @@ class Socket {
   }
 
   connect(socket) {
+    let self = this;
+
     console.log("Connect Socket", socket.id);
     let userId = socket.decoded_token.email;
     let user = UserRepository.addOrGet(userId, {room: '/village/start'});
@@ -16,9 +18,9 @@ class Socket {
 
     this._sockets[socket.id] = socket;
 
-    socket.on('disconnect', function(){
-      delete this._sockets[socket.id];
-      console.log('user disconnected');
+    socket.on('disconnect', function() {
+      console.log('user disconnected', socket.id);
+      delete self._sockets[socket.id];
     });
 
     socket.on('cmd', function(cmd) {
@@ -26,8 +28,8 @@ class Socket {
     });
   }
 
-  emit(msg) {
-    this.socket.emit('msg', msg);
+  emit(user, data) {
+    this._sockets[user.socket].emit('msg', data);
   }
 }
 

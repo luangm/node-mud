@@ -15,16 +15,34 @@ class App extends Component {
 
   componentDidMount() {
     let self = this;
-    this.socket.emit('authenticate', {token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdF9uYW1lIjoiSm9obiIsImxhc3RfbmFtZSI6IkRvZSIsImVtYWlsIjoiam9obkBkb2UuY29tIiwiaWQiOjEyMywiaWF0IjoxNTE2Njc2NjczLCJleHAiOjE1MTY2OTQ2NzN9.q26RKNDjEF_aFrAoAi3uA9XBK_-5qxSvz3BfDOMVzeA'})
+    this.socket.emit('authenticate', {token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdF9uYW1lIjoiSm9obiIsImxhc3RfbmFtZSI6IkRvZSIsImVtYWlsIjoiam9obkBkb2UuY29tIiwiaWQiOjEyMywiaWF0IjoxNTE2NzAwOTU3LCJleHAiOjE1MTY3MTg5NTd9.oR4p07pfxHU7bL-utfGsEf_y05gH2MDebyzaJjBMAbc'})
 
       .on('authenticated', function() {
         console.log('authenticated');
       });
 
-    this.socket.on('msg', function(msg){
-      self.setState({
-        buffer: [...self.state.buffer, msg]
-      });
+    this.socket.on('msg', function(msg) {
+      console.log(msg);
+
+      switch (msg.cmd) {
+        case "look":
+          let exits = "The exits are: ";
+          for (let exit of msg.exits) {
+            exits += exit.dir + ', ';
+          }
+          self.setState({
+            buffer: [...self.state.buffer, msg.desc, exits]
+          });
+          break;
+        case 'go':
+          self.setState({
+            buffer: [...self.state.buffer, msg.desc]
+          });
+          break;
+        default:
+          break;
+      }
+
     });
   }
 

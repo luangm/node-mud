@@ -10,6 +10,10 @@ export default class VillageRoom2 extends Room {
     return 'Room 2'
   }
 
+  get description() {
+    return 'This is Room 2';
+  }
+
   get exits() {
     return [{
       dir: 'south',

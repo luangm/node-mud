@@ -1,6 +1,4 @@
 import Character from "./Character";
-import RoomRepository from "../../db/RoomRepository";
-import Socket from "../../socket/Socket";
 
 export default class User extends Character {
 
@@ -22,15 +20,11 @@ export default class User extends Character {
     this._room = val;
   }
 
-  go(room) {
-    room = room || this.room;
-    console.log("this user is going to", room);
+  get socket() {
+    return this._socket;
+  }
 
-    let roomObj = RoomRepository.get(room);
-
-    if (roomObj != null) {
-      this.room = roomObj.path;
-      Socket.emit('Entering Room: ' + roomObj.name);
-    }
+  set socket(val) {
+    this._socket = val;
   }
 }
