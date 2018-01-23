@@ -9,7 +9,7 @@ class LookCommand extends Command {
 
   execute(user, args) {
     let room = RoomRepository.get(user.room);
-    console.log(room);
+    // console.log(room);
     let data = {
       cmd: this.cmd,
       desc: room.description,
