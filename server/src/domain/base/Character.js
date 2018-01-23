@@ -78,4 +78,13 @@ export default class Character {
   get will() {
     return 0;
   }
+
+  get room() {
+    return '';
+  }
+
+  go(room) {
+    room = room || this.room;
+    console.log("this user is going to", room);
+  }
 }
